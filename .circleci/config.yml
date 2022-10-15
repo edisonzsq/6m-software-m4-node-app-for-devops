@@ -39,7 +39,7 @@ jobs:
           tag: <<pipeline.git.tag>>
 
   deploy:
-    executor: docker/docker
+    executor: heroku/default
     steps:
       - setup_remote_docker
       - docker/check
