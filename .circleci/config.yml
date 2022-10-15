@@ -25,12 +25,7 @@ jobs:
           npm run test
   
   build-and-push:
-    executor: docker/docker
-    filters:
-      tags:
-        only: /^v.*/
-      branches:
-        ignore: /.*/
+    executor: docker/docker    
     steps:
       - setup_remote_docker
       - checkout
@@ -50,4 +45,9 @@ workflows:
             - build          
       - build-and-push:
           requires:
-            - test          
+            - test    
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/      
