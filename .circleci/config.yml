@@ -44,7 +44,7 @@ jobs:
       - setup_remote_docker
       - docker/check
       - docker/pull:
-          image: edisonzsq/education-space:<<pipeline.git.tag>>      
+          images: edisonzsq/education-space:<<pipeline.git.tag>>      
       - heroku/push-docker-image 
       
 
