@@ -45,6 +45,7 @@ jobs:
       - docker/check
       - docker/pull:
           images: edisonzsq/education-space:<<pipeline.git.tag>>      
+      - heroku/install
       - heroku/push-docker-image 
       
 
