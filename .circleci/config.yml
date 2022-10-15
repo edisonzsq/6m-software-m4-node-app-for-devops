@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.1
-  heroku: circleci/heroku@1.2.6
+  docker: circleci/docker@2.1.4
 jobs:
   build:
     docker:
@@ -25,24 +25,16 @@ jobs:
           echo “Running tests...”
           npm run test
   
-  publish:
-    docker:
-      - image: cimg/node:16.10
+  build-and-push:
+    executor: docker/docker
     steps:
-      - checkout
       - setup_remote_docker
-      - node/install-packages:
-          pkg-manager: npm
-      - run: |
-          echo Installing dependencies...”
-          npm install
-      - run:
-          name: Build and publish docker image to registry
-          command: |
-            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASS
-            docker build -t edisonzsq/education-space .
-            docker push edisonzsq/education-space:latest
-            docker logout
+      - checkout
+      - docker/check
+      - docker/build:
+          image: edisonzsq/education-space
+      - docker/push:
+          image: edisonzsq/education-space:latest
 
 workflows:
   simple_workflow:
@@ -51,6 +43,6 @@ workflows:
       - test:
           requires:
             - build
-      - publish:
+      - build-and-push:
           requires:
             - test
