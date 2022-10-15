@@ -30,7 +30,10 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - docker/check
+      - docker/check:
+          docker-password: ${PARAM_DOCKER_PASSWORD}
+          docker-username: ${PARAM_DOCKER_USERNAME}
+          registry: ${PARAM_REGISTRY}
       - docker/build:
           image: edisonzsq/education-space
       - docker/push:
