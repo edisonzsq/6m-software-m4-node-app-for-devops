@@ -34,7 +34,7 @@ jobs:
           image: edisonzsq/education-space
       - docker/push:
           image: edisonzsq/education-space
-          tag: <<parameter
+          tag: <<pipeline.git.tag>>
 
 workflows:
   simple_workflow:
