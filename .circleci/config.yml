@@ -23,6 +23,21 @@ jobs:
       - run: |
           echo “Running tests...”
           npm run test
+  
+  publish:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run: |
+          echo Installing dependencies...”
+          npm install
+      - run: |
+          docker build -t edisonzsq/education-space .
+          docker push edisonzsq/education-space
+
 
 workflows:
   simple_workflow:
@@ -31,3 +46,6 @@ workflows:
       - test:
           requires:
             - build
+      - publish:
+          requires:
+            - test
