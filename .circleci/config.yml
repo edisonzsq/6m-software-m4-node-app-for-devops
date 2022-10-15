@@ -54,7 +54,7 @@ jobs:
           echo "Push image to heroku registry"
           docker push registry.heroku.com/edison-su-devops
           echo "Heroku release"
-          heroku container:release -a edison-su-devops
+          heroku container:release web -a edison-su-devops
 
 workflows:
   simple_workflow:
