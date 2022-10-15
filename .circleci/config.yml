@@ -40,14 +40,20 @@ workflows:
   simple_workflow:
     jobs:
       - build
+          filters:
+            branches:
+              only:
+                - main
       - test:
           requires:
-            - build          
+            - build 
+          filters:
+            branches:
+              only:
+                - main         
       - build-and-push:
           requires:
             - test    
           filters:
             tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/      
+              only: /^v.*/    
