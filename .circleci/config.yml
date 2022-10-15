@@ -43,11 +43,16 @@ jobs:
     steps:
       - setup_remote_docker
       - docker/check
-      - docker/pull:
-          images: edisonzsq/education-space:<<pipeline.git.tag>>      
+      - run: |
+          echo "Pull image from docker.io registry"
+          docker pull edisonzsq/education-space:<<pipeline.git.tag>>  
       - heroku/install
-      - heroku/push-docker-image 
-      
+      - run: |
+          echo "Deploy docker image to heroku"
+          heroku container:login
+          docker tag edisonzsq/education-space:<<pipeline.git.tag>> registry.heroku.com/edison-su-devops/web
+          docker push registry.heroku.com/edison-su-devops
+          heroku container:release
 
 workflows:
   simple_workflow:
