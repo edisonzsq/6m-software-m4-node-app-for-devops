@@ -39,7 +39,7 @@ jobs:
       - run:
           name: Build and publish docker image to registry
           command: |
-            docker login
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASS
             docker build -t edisonzsq/education-space .
             docker push edisonzsq/education-space:latest
             docker logout
