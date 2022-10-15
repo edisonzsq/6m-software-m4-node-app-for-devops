@@ -34,6 +34,7 @@ jobs:
           image: edisonzsq/education-space
       - docker/push:
           image: edisonzsq/education-space
+          tag: <<parameter
 
 workflows:
   simple_workflow:
@@ -45,3 +46,7 @@ workflows:
       - build-and-push:
           requires:
             - test
+          filters:
+            tags:
+              only:
+                - /^v.*/
