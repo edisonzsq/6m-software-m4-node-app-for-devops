@@ -37,25 +37,26 @@ jobs:
           tag: <<pipeline.git.tag>>
 
 workflows:
-  simple_workflow:
+  build_workflow:
     jobs:
-      - build
+      - build              
+      - test:
+          requires:
+            - build
+  
+  deploy_workflow:
+    jobs:
+      - build    
           filters:
             tags:
-              only: /^v.*/
-            branches:
-              only:
-                - main
+              only: /^v.*/          
       - test:
           requires:
             - build
           filters:
             tags:
               only: /^v.*/
-          branches:
-              only:
-                - main
-                
+              
       - build-and-push:
           requires:
             - test
