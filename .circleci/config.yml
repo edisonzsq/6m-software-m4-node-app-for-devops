@@ -33,7 +33,7 @@ jobs:
       - docker/build:
           image: edisonzsq/education-space
       - docker/push:
-          image: edisonzsq/education-space:latest
+          image: edisonzsq/education-space
 
 workflows:
   simple_workflow:
