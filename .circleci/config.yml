@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
+  heroku: circleci/heroku@2.0.0
 jobs:
   build:
     docker:
@@ -37,6 +38,16 @@ jobs:
           image: edisonzsq/education-space
           tag: <<pipeline.git.tag>>
 
+  deploy:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - docker/check
+      - docker/pull:
+          image: edisonzsq/education-space:<<pipeline.git.tag>>      
+      - heroku/push-docker-image 
+      
+
 workflows:
   simple_workflow:
     jobs:
@@ -54,3 +65,9 @@ workflows:
           filters:
             tags:
               only: /^v.*/    
+      - deploy:
+          requires:
+            - build-and-push
+          filters:
+            tags:
+              only: /^v.*/
