@@ -26,29 +26,10 @@ jobs:
   
   build-and-push:
     executor: docker/docker
-    parameters:
-      docker-password:
-        default: PARAM_DOCKER_PASSWORD
-        description: |
-          Name of environment variable storing the docker password
-        type: env_var_name
-      docker-username:
-        default: PARAM_DOCKER_USERNAME
-        description: |
-          Name of environment variable storing the docker username
-        type: env_var_name
-      registry:
-        default: PARAM_REGISTRY
-        description: |
-          Name of environment variable storing the docker hub registry name
-        type: env_var_name
     steps:
       - setup_remote_docker
       - checkout
-      - docker/check:
-          docker-password: <<parameters.docker-password>>
-          docker-username: <<parameters.docker-username>>
-          registry: <<parameters.registry>>
+      - docker/check
       - docker/build:
           image: edisonzsq/education-space
       - docker/push:
