@@ -44,16 +44,23 @@ workflows:
             branches:
               only:
                 - main
+            tags:
+              ignore: /.*/
       - test:
           requires:
             - build 
           filters:
             branches:
               only:
-                - main         
+                - main    
+            tags:
+              ignore: /.*/     
       - build-and-push:
           requires:
             - test    
           filters:
             tags:
               only: /^v.*/    
+            branches:
+              ignore:
+                - main
