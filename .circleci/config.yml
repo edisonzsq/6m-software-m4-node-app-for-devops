@@ -32,6 +32,7 @@ jobs:
       - docker/check
       - docker/build:
           image: edisonzsq/education-space
+          tag: <<pipeline.git.tag>>
       - docker/push:
           image: edisonzsq/education-space
           tag: <<pipeline.git.tag>>
