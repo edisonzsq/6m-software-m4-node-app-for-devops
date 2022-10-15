@@ -64,10 +64,14 @@ workflows:
       - build-and-push:  
           filters:
             tags:
-              only: /^v.*/    
+              only: /^v.*/  
+            branches: 
+              ignore: /.*/
       - deploy:
           requires:
             - build-and-push
           filters:
             tags:
               only: /^v.*/
+            branches: 
+              ignore: /.*/
