@@ -26,6 +26,11 @@ jobs:
   
   build-and-push:
     executor: docker/docker
+    filters:
+      tags:
+        only: /^v.*/
+      branches:
+        ignore: /.*/
     steps:
       - setup_remote_docker
       - checkout
@@ -37,29 +42,12 @@ jobs:
           tag: <<pipeline.git.tag>>
 
 workflows:
-  build_workflow:
+  simple_workflow:
     jobs:
-      - build              
+      - build
       - test:
           requires:
-            - build
-  
-  deploy_workflow:
-    jobs:
-      - build    
-          filters:
-            tags:
-              only: /^v.*/          
-      - test:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-              
+            - build          
       - build-and-push:
           requires:
-            - test
-          filters:
-            tags:
-              only: /^v.*/
+            - test          
