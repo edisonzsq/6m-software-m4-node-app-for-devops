@@ -51,8 +51,10 @@ jobs:
           echo "Deploy docker image to heroku"
           heroku container:login
           docker tag edisonzsq/education-space:<<pipeline.git.tag>> registry.heroku.com/edison-su-devops
+          echo "Push image to heroku registry"
           docker push registry.heroku.com/edison-su-devops
-          heroku container:release
+          echo "Heroku release"
+          heroku container:release web release
 
 workflows:
   simple_workflow:
