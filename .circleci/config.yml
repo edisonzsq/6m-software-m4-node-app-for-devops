@@ -49,9 +49,7 @@ workflows:
           filters:
             branches:
               only: main     
-      - build-and-push:
-          requires:
-            - test    
+      - build-and-push:  
           filters:
             tags:
               only: /^v.*/    
