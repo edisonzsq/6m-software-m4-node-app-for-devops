@@ -37,22 +37,12 @@ jobs:
           echo Installing dependencies...”
           npm install
       - run:
-          name: Login to Docker
+          name: Build and publish docker image to registry
           command: |
             docker login
-      - run: 
-          name: Build docker image
-          command: |
             docker build -t edisonzsq/education-space .
-      - run: 
-          name: Push docker image
-          command: |
             docker push edisonzsq/education-space:latest
-      - run:
-          name: Log out of docker
-          command: |
-            
-
+            docker logout
 
 workflows:
   simple_workflow:
