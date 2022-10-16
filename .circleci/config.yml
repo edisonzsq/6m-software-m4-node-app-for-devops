@@ -3,6 +3,7 @@ orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
   heroku: circleci/heroku@2.0.0
+  snyk: snyk/snyk@1.2.3
 jobs:
   build:
     docker:
@@ -62,10 +63,8 @@ jobs:
       - docker/build:
           image: edisonzsq/education-space
           tag: <<pipeline.git.tag>>
-      - run:
-          name: Build and Scan
-          command: |
-            docker scan -y edisonzsq/education-space:<<pipeline.git.tag>>
+      - snyk/scan: 
+          docker-image-name: edisonzsq/education-space:<<pipeline.git.tag>>
 
 workflows:
   simple_workflow:
