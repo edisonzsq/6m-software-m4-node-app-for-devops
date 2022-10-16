@@ -52,6 +52,22 @@ jobs:
             heroku container:push web -a edison-su-devops
             heroku container:release web -a edison-su-devops
 
+  scan:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: edisonzsq/education-space
+          tag: <<pipeline.git.tag>>
+      - run:
+          name: Build and Scan
+          command: |
+            docker scan edisonzsq/education-space:<<pipeline.git.tag>>
+
+
 workflows:
   simple_workflow:
     jobs:
@@ -64,13 +80,22 @@ workflows:
             - build 
           filters:
             branches:
-              only: main     
+              only: main    
+
+      - scan:
+          requires:
+            - build
+          filters:
+            branches:
+              only:main
+
       - build-and-push:  
           filters:
             tags:
               only: /^v.*/  
             branches: 
               ignore: /.*/
+
       - deploy:
           requires:
             - build-and-push
