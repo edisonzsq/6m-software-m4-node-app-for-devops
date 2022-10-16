@@ -25,7 +25,6 @@ jobs:
       - run: |
           echo “Running tests...”
           npm run test
-  
   build-and-push:
     executor: docker/docker    
     steps:
@@ -38,7 +37,6 @@ jobs:
       - docker/push:
           image: edisonzsq/education-space
           tag: <<pipeline.git.tag>>
-
   deploy:
     docker:
       - image: cimg/node:16.10
@@ -52,7 +50,6 @@ jobs:
             heroku container:login
             heroku container:push web -a edison-su-devops
             heroku container:release web -a edison-su-devops
-
   scan:
     docker:
       - image: cimg/node:16.10
@@ -78,21 +75,18 @@ workflows:
           filters:
             branches:
               only: main    
-
       - scan:
           requires:
             - build
           filters:
             branches:
               only: main
-
       - build-and-push:  
           filters:
             tags:
               only: /^v.*/  
             branches: 
               ignore: /.*/
-
       - deploy:
           requires:
             - build-and-push
