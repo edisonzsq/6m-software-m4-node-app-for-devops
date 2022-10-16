@@ -42,7 +42,7 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
-      - heroku/push-docker-image:          
+      - heroku/push-docker-image      
 
 workflows:
   simple_workflow:
