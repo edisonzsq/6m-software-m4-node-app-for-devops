@@ -41,6 +41,7 @@ jobs:
   deploy:
     executor: heroku/default
     steps:
+      - checkout
       - heroku/push-docker-image:          
 
 workflows:
