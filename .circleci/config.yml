@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Build and Scan
           command: |
-            docker scan edisonzsq/education-space:<<pipeline.git.tag>>
+            docker scan -y edisonzsq/education-space:<<pipeline.git.tag>>
 
 workflows:
   simple_workflow:
