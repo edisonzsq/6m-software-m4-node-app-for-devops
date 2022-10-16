@@ -39,10 +39,17 @@ jobs:
           tag: <<pipeline.git.tag>>
 
   deploy:
-    executor: heroku/default
+    executor: cimg/node:16.10
     steps:
+      - setup_remote_docker      
+      - heroku/install
       - checkout
-      - heroku/push-docker-image      
+      - run:
+          name: Heroku Container Push
+          command: | 
+            heroku container:login
+            heroku container:push web -a edison-su-devops
+            heroku container:release web -a edison-su-devops
 
 workflows:
   simple_workflow:
