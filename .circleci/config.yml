@@ -62,9 +62,8 @@ jobs:
       - docker/check
       - docker/build:
           image: edisonzsq/education-space
-          tag: <<pipeline.git.tag>>
       - snyk/scan: 
-          docker-image-name: edisonzsq/education-space:<<pipeline.git.tag>>
+          docker-image-name: edisonzsq/education-space
 
 workflows:
   simple_workflow:
