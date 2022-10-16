@@ -39,7 +39,8 @@ jobs:
           tag: <<pipeline.git.tag>>
 
   deploy:
-    executor: cimg/node:16.10
+    docker:
+      - image: cimg/node:16.10
     steps:
       - setup_remote_docker      
       - heroku/install
