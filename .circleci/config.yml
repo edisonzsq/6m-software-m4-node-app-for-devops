@@ -41,20 +41,7 @@ jobs:
   deploy:
     executor: heroku/default
     steps:
-      - setup_remote_docker
-      - docker/check
-      - run: |
-          echo "Pull image from docker.io registry"
-          docker pull edisonzsq/education-space:<<pipeline.git.tag>>  
-      - heroku/install
-      - run: |
-          echo "Deploy docker image to heroku"
-          heroku container:login
-          docker tag edisonzsq/education-space:<<pipeline.git.tag>> registry.heroku.com/edison-su-devops:<<pipeline.git.tag>>
-          echo "Push image to heroku registry"
-          heroku container:push registry.heroku.com/edison-su-devops:<<pipeline.git.tag>>
-          echo "Heroku release"          
-          heroku container:release web release -a edison-su-devops
+      - heroku/push-docker-image:          
 
 workflows:
   simple_workflow:
