@@ -67,7 +67,6 @@ jobs:
           command: |
             docker scan edisonzsq/education-space:<<pipeline.git.tag>>
 
-
 workflows:
   simple_workflow:
     jobs:
@@ -87,7 +86,7 @@ workflows:
             - build
           filters:
             branches:
-              only:main
+              only: main
 
       - build-and-push:  
           filters:
