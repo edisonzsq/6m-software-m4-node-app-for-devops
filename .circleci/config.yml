@@ -62,9 +62,22 @@ jobs:
       - snyk/scan: 
           docker-image-name: edisonzsq/education-space
 
+  test-vault:  
+    docker:
+      - image: cimg/node:16.10
+      - image: mannimal/vault-cci
+        environment:
+          SKIP_SETCAP: skip
+    steps:
+      - checkout
+      - run:
+          name: Setup Vault
+          command: curl localhost:8201/client-token
+
 workflows:
   simple_workflow:
     jobs:
+      - test-vault
       - build:
           filters:
             branches:
